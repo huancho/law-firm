@@ -70,7 +70,7 @@ function Hero() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-scrim-b"
       />
-      <div className="mx-auto w-full max-w-6xl px-6 pt-36 pb-20 md:pb-28">
+      <div className="mx-auto w-full max-w-6xl pt-28 px-gutter pb-20 md:pt-36 md:pb-28">
         <div className="flex max-w-2xl flex-col gap-6">
           <Eyebrow className="hero-rise text-brass-200 [--delay:150ms]">
             Practicing in Boston since {firm.founded}
@@ -115,7 +115,7 @@ function About() {
   ]
 
   return (
-    <section id="about" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <section id="about" className="mx-auto max-w-6xl py-24 px-gutter md:py-32">
       <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
         {/* Landscape on phones so the photo doesn't push the copy below the fold. */}
         <div className="relative aspect-3/2 overflow-hidden rounded-lg md:col-span-5 md:aspect-4/5">
@@ -167,7 +167,7 @@ function About() {
 function PracticeAreas() {
   return (
     <section id="practice-areas" className="bg-stone-100 dark:bg-navy-900/40">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <div className="mx-auto max-w-6xl py-24 px-gutter md:py-32">
         <div className="flex max-w-2xl flex-col gap-4">
           <Eyebrow>Practice areas</Eyebrow>
           <H2>Five kinds of law, and we turn down the rest</H2>
@@ -225,7 +225,10 @@ function PracticeAreas() {
 
 function Attorneys() {
   return (
-    <section id="attorneys" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+    <section
+      id="attorneys"
+      className="mx-auto max-w-6xl py-24 px-gutter md:py-32"
+    >
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div className="flex max-w-2xl flex-col gap-4">
           <Eyebrow>Our attorneys</Eyebrow>
@@ -286,7 +289,7 @@ function Attorneys() {
 function Contact() {
   return (
     <section id="contact" className="bg-navy-950 text-stone-50">
-      <div className="mx-auto grid max-w-6xl gap-14 px-6 py-24 md:grid-cols-12 md:py-32">
+      <div className="mx-auto grid max-w-6xl gap-14 py-24 px-gutter md:grid-cols-12 md:py-32">
         <div className="flex flex-col gap-6 md:col-span-5">
           <Eyebrow className="text-brass-200">Contact</Eyebrow>
           <H2>Tell us what’s going on</H2>

@@ -9,7 +9,7 @@ function SiteFooter() {
   // a row at lg, where the office column is wide enough to keep the email on one line.
   return (
     <footer className="border-t-hairline">
-      <div className="mx-auto grid max-w-6xl gap-x-6 gap-y-12 px-6 pt-16 pb-10 sm:grid-cols-2 lg:grid-cols-12">
+      <div className="mx-auto grid max-w-6xl gap-x-6 gap-y-12 pt-16 px-gutter pb-[calc(2.5rem+env(safe-area-inset-bottom,0px))] sm:grid-cols-2 lg:grid-cols-12">
         <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-5">
           <a
             href="#"

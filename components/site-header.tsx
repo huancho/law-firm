@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react"
 
+import { MobileMenu } from "@/components/mobile-menu"
 import { buttonVariants } from "@/components/ui/button"
 import { firm, navigation } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
-// Matches h-20, so the header only hides once it has cleared its own height.
+// Matches md:h-20, so the header only hides once it has cleared its own height.
 const headerHeight = 80
 // Ignore trackpad jitter so the header doesn't flicker on tiny movements.
 const scrollThreshold = 4
@@ -62,9 +63,9 @@ function SiteHeader() {
       data-scrolled={state !== "top" || undefined}
       data-hidden={state === "hidden" || undefined}
       onFocus={() => setState((s) => (s === "hidden" ? "shown" : s))}
-      className="fixed inset-x-0 top-0 z-10 border-b-hairline border-transparent text-stone-50 transition-[translate,background-color,border-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-hidden:-translate-y-full data-hidden:duration-200 data-hidden:ease-in data-scrolled:border-stone-50/10 data-scrolled:bg-navy-950 motion-reduce:transition-none"
+      className="fixed inset-x-0 top-0 z-10 border-b-hairline border-transparent pt-[env(safe-area-inset-top,0px)] text-stone-50 transition-[translate,background-color,border-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-hidden:-translate-y-full data-hidden:duration-200 data-hidden:ease-in data-scrolled:border-stone-50/10 data-scrolled:bg-navy-950 motion-reduce:transition-none"
     >
-      <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-gutter md:h-20">
         <a
           href="#"
           className="relative font-heading text-2xl tracking-tight before:absolute before:-inset-x-2 before:-inset-y-1.5"
@@ -85,15 +86,22 @@ function SiteHeader() {
             ))}
           </ul>
         </nav>
-        <a
-          href="#contact"
-          className={cn(
-            buttonVariants(),
-            "relative h-10 bg-stone-50 px-4 text-navy-950 before:absolute before:-inset-1 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
-          )}
-        >
-          Book a consultation
-        </a>
+        {/* Phones get the consultation button inside the menu instead; the
+            logo, button and menu trigger don't fit one row at 375px. */}
+        <div className="-mr-2 flex items-center gap-3 md:mr-0">
+          <a
+            href="#contact"
+            className={cn(
+              buttonVariants(),
+              "relative hidden h-10 bg-stone-50 px-4 text-navy-950 before:absolute before:-inset-1 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 sm:inline-flex dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
+            )}
+          >
+            Book a consultation
+          </a>
+          <div className="md:hidden">
+            <MobileMenu />
+          </div>
+        </div>
       </div>
     </header>
   )

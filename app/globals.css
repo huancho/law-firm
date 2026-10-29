@@ -233,8 +233,26 @@
   body {
     @apply bg-background text-foreground;
   }
+  /* No tap flash, no landscape font inflation, and no rubber band that would
+     flash the stone background above the navy hero. */
   html {
     @apply font-sans [font-synthesis:none];
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+  button,
+  [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
   }
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -246,6 +264,13 @@
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }
+}
+
+/* Page gutter that widens to clear the notch in landscape, since
+   viewport-fit=cover lets section backgrounds run under it. */
+@utility px-gutter {
+  padding-left: max(1.5rem, env(safe-area-inset-left));
+  padding-right: max(1.5rem, env(safe-area-inset-right));
 }
 
 /* Underline that draws in from the left on hover, keyboard focus and press,
