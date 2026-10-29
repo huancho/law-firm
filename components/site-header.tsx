@@ -1,17 +1,69 @@
+"use client"
+
+import { useEffect, useState } from "react"
+
 import { buttonVariants } from "@/components/ui/button"
-import { firm } from "@/lib/firm"
+import { firm, navigation } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
-const links = [
-  { href: "#about", label: "About" },
-  { href: "#practice-areas", label: "Practice areas" },
-  { href: "#attorneys", label: "Attorneys" },
-  { href: "#contact", label: "Contact" },
-]
+// Matches h-20, so the header only hides once it has cleared its own height.
+const headerHeight = 80
+// Ignore trackpad jitter so the header doesn't flicker on tiny movements.
+const scrollThreshold = 4
+
+type HeaderState = "top" | "shown" | "hidden"
+
+function useHeaderState() {
+  const [state, setState] = useState<HeaderState>("top")
+
+  useEffect(() => {
+    let lastY = window.scrollY
+    // A reload restores the scroll position, so the header may start mid-page.
+    let frame = requestAnimationFrame(() => {
+      frame = 0
+      if (lastY > 0) setState("shown")
+    })
+
+    function update() {
+      frame = 0
+      const y = window.scrollY
+      if (y <= 0) {
+        setState("top")
+      } else if (Math.abs(y - lastY) < scrollThreshold) {
+        return
+      } else {
+        setState(y > lastY && y > headerHeight ? "hidden" : "shown")
+      }
+      lastY = y
+    }
+
+    function onScroll() {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      cancelAnimationFrame(frame)
+    }
+  }, [])
+
+  return [state, setState] as const
+}
 
 function SiteHeader() {
+  const [state, setState] = useHeaderState()
+
+  // Enters on a slow-settling ease-out; leaves faster with ease-in, since the
+  // reader is already looking at the page. Tabbing into a hidden header brings
+  // it back so keyboard focus is never off-screen.
   return (
-    <header className="absolute inset-x-0 top-0 z-10 text-stone-50">
+    <header
+      data-scrolled={state !== "top" || undefined}
+      data-hidden={state === "hidden" || undefined}
+      onFocus={() => setState((s) => (s === "hidden" ? "shown" : s))}
+      className="fixed inset-x-0 top-0 z-10 border-b-hairline border-transparent text-stone-50 transition-[translate,background-color,border-color] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-hidden:-translate-y-full data-hidden:duration-200 data-hidden:ease-in data-scrolled:border-stone-50/10 data-scrolled:bg-navy-950 motion-reduce:transition-none"
+    >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-6">
         <a
           href="#"
@@ -21,11 +73,11 @@ function SiteHeader() {
         </a>
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-8 text-small">
-            {links.map((link) => (
+            {navigation.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="relative text-stone-200 transition-colors before:absolute before:-inset-x-3 before:-inset-y-3 hover:text-stone-50"
+                  className="link-underline text-stone-200 transition-colors before:absolute before:-inset-x-3 before:-inset-y-3 hover:text-stone-50"
                 >
                   {link.label}
                 </a>
@@ -36,8 +88,8 @@ function SiteHeader() {
         <a
           href="#contact"
           className={cn(
-            buttonVariants({ variant: "outline" }),
-            "relative h-9 border-stone-50/30 bg-transparent px-3.5 text-stone-50 before:absolute before:-inset-1 hover:bg-stone-50/10 hover:text-stone-50 focus-visible:border-stone-50/60 focus-visible:ring-stone-50/30 dark:bg-transparent"
+            buttonVariants(),
+            "relative h-10 bg-stone-50 px-4 text-navy-950 before:absolute before:-inset-1 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
           )}
         >
           Book a consultation

@@ -4,6 +4,7 @@ import Image from "next/image"
 import { ContactForm } from "@/components/contact-form"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
+import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Eyebrow, H1, H2, H3, Lead, P, Small } from "@/components/ui/typography"
 import { attorneys, firm, practiceAreas } from "@/lib/firm"
@@ -21,6 +22,9 @@ const imageOutline =
   "rounded-[inherit] outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
 
 const introScript = `try{var s=document.currentScript.parentElement;if(sessionStorage.getItem("intro-seen"))s.dataset.introSeen="";else sessionStorage.setItem("intro-seen","1")}catch(e){}`
+
+const attorneyLink =
+  "relative w-fit underline decoration-foreground/25 underline-offset-[0.25em] transition-colors before:absolute before:-inset-x-1 before:-inset-y-1.5 hover:decoration-foreground"
 
 const contactLink =
   "relative underline decoration-stone-50/30 underline-offset-[0.25em] transition-colors before:absolute before:-inset-y-2 hover:decoration-stone-50"
@@ -103,39 +107,46 @@ function Hero() {
 }
 
 function About() {
+  // Short numerals only, so the three columns still fit side by side at 375px.
   const facts = [
     { label: "Founded", value: String(firm.founded) },
     { label: "Attorneys", value: "14" },
-    { label: "Offices", value: "Boston & Providence" },
+    { label: "Offices", value: "2" },
   ]
 
   return (
     <section id="about" className="mx-auto max-w-6xl px-6 py-24 md:py-32">
       <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
-        <div className="relative aspect-4/5 overflow-hidden rounded-lg md:col-span-5">
+        {/* Landscape on phones so the photo doesn't push the copy below the fold. */}
+        <div className="relative aspect-3/2 overflow-hidden rounded-lg md:col-span-5 md:aspect-4/5">
           <Image
             src="https://images.unsplash.com/photo-1505547828843-176834e42154?w=1600&q=80"
             alt="Stone columns beneath a coffered ceiling and skylight"
             fill
-            sizes="(min-width: 768px) 40vw, 100vw"
+            sizes="(min-width: 1152px) 440px, (min-width: 768px) 40vw, 100vw"
             className={cn("object-cover", imageOutline)}
           />
         </div>
-        <div className="flex flex-col gap-6 md:col-span-7">
-          <Eyebrow>About the firm</Eyebrow>
-          <H2>We’ve kept it small on purpose</H2>
-          <P className="text-muted-foreground">
-            Daniel Calder and Elena Wren opened the firm in {firm.founded}
-            after years of watching clients at big firms ask who was actually
-            working on their case. They still read every new matter that comes
-            in.
-          </P>
-          <P className="text-muted-foreground">
-            We take on fewer cases than we could. Each client gets one lead
-            attorney who knows the file and will tell you when going to court
-            isn’t worth the money.
-          </P>
-          <dl className="mt-4 grid grid-cols-3 gap-6 border-t-hairline pt-6">
+        <div className="flex flex-col gap-8 md:col-span-7">
+          <div className="flex flex-col gap-4">
+            <Eyebrow>About the firm</Eyebrow>
+            <H2>We’ve kept it small on purpose</H2>
+          </div>
+          {/* Paragraph spacing of one line-height keeps the vertical rhythm. */}
+          <div className="flex flex-col gap-[1lh] text-body">
+            <P className="text-muted-foreground">
+              Daniel Calder and Elena Wren opened the firm in {firm.founded}{" "}
+              after years of watching clients at big firms ask who was actually
+              working on their case. They still read every new matter that
+              comes in.
+            </P>
+            <P className="text-muted-foreground">
+              We take on fewer cases than we could. Each client gets one lead
+              attorney who knows the file and will tell you when going to court
+              isn’t worth the money.
+            </P>
+          </div>
+          <dl className="grid max-w-prose grid-cols-3 gap-6 border-t-hairline border-foreground/15 pt-6">
             {facts.map((fact) => (
               <div key={fact.label} className="flex flex-col gap-1">
                 <dt className="text-small text-muted-foreground">
@@ -161,23 +172,52 @@ function PracticeAreas() {
           <Eyebrow>Practice areas</Eyebrow>
           <H2>Five kinds of law, and we turn down the rest</H2>
         </div>
-        <ol className="mt-14 border-t-hairline border-foreground/15">
+        <ol className="mt-14 border-t-hairline border-foreground/15 dark:border-navy-800">
           {practiceAreas.map((area, i) => (
+            // Baseline alignment lines the number, heading and the first line
+            // of the description up across columns.
             <li
               key={area.name}
-              className="grid gap-4 border-b-hairline border-foreground/15 py-8 md:grid-cols-12 md:gap-8"
+              className="grid grid-cols-[2rem_1fr] items-baseline gap-x-4 gap-y-3 border-b-hairline border-foreground/15 py-8 md:grid-cols-12 md:gap-x-8 dark:border-navy-800"
             >
-              <span className="text-small text-muted-foreground tabular-nums md:col-span-1 md:pt-1.5">
+              <span
+                aria-hidden
+                className="text-small text-muted-foreground tabular-nums md:col-span-1"
+              >
                 {String(i + 1).padStart(2, "0")}
               </span>
               <H3 className="md:col-span-4">{area.name}</H3>
-              <div className="flex flex-col gap-3 md:col-span-7">
+              <div className="col-start-2 flex flex-col gap-3 md:col-span-7 md:col-start-6">
                 <P className="text-muted-foreground">{area.description}</P>
-                <Small>{area.matters.join(" · ")}</Small>
+                <ul className="flex flex-wrap gap-2">
+                  {area.matters.map((matter) => (
+                    <li key={matter}>
+                      <Badge
+                        variant="outline"
+                        className="h-6 border-foreground/15 px-2.5 dark:border-navy-800"
+                      >
+                        {matter}
+                      </Badge>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </li>
           ))}
         </ol>
+        <div className="mt-10 grid grid-cols-[2rem_1fr] gap-x-4 md:grid-cols-12 md:gap-x-8">
+          <P className="col-start-2 text-muted-foreground md:col-span-7 md:col-start-6">
+            Not sure where your matter fits?{" "}
+            <a
+              href="#contact"
+              className="relative text-foreground decoration-foreground/25 transition-colors before:absolute before:-inset-y-2.5 hover:decoration-foreground"
+            >
+              Tell us what’s going on
+            </a>
+            . If it isn’t something we handle, we’ll say so and point you to
+            someone who does.
+          </P>
+        </div>
       </div>
     </section>
   )
@@ -196,32 +236,48 @@ function Attorneys() {
           through your case.
         </Lead>
       </div>
-      <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
-        {attorneys.map((attorney) => (
-          <li key={attorney.name} className="flex flex-col gap-4">
-            <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-muted">
-              <Image
-                src={attorney.image}
-                alt={`Portrait of ${attorney.name}`}
-                fill
-                sizes="(min-width: 1024px) 25vw, 50vw"
-                className={cn("object-cover object-[50%_20%]", imageOutline)}
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <p className="font-heading text-xl">{attorney.name}</p>
-              <Small>
-                {attorney.role} · {attorney.focus}
-              </Small>
-              <a
-                href={`mailto:${attorney.email}`}
-                className="relative mt-1 w-fit text-small break-all text-foreground underline decoration-foreground/25 underline-offset-[0.25em] transition-colors before:absolute before:-inset-y-2.5 hover:decoration-foreground"
-              >
-                {attorney.email}
-              </a>
-            </div>
-          </li>
-        ))}
+      <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4">
+        {attorneys.map((attorney) => {
+          const [mailbox, domain] = attorney.email.split("@")
+
+          return (
+            <li key={attorney.name} className="flex flex-col gap-5">
+              <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-muted">
+                <Image
+                  src={attorney.image}
+                  alt={`Portrait of ${attorney.name}`}
+                  fill
+                  sizes="(min-width: 1152px) 258px, (min-width: 768px) 25vw, 50vw"
+                  className={cn("object-cover object-[50%_20%]", imageOutline)}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <h3 className="font-heading text-xl">{attorney.name}</h3>
+                {/* Role and focus on their own lines, so a narrow card never
+                    strands the separator at a line break. */}
+                <Small>
+                  {attorney.role}
+                  <span className="block">{attorney.focus}</span>
+                </Small>
+              </div>
+              {/* Hit areas stretch by half the gap, so the two links meet
+                  without overlapping. */}
+              <div className="flex flex-col gap-3 border-t-hairline border-foreground/15 pt-4 text-small">
+                <a
+                  href={attorney.phoneHref}
+                  className={cn(attorneyLink, "tabular-nums")}
+                >
+                  {attorney.phone}
+                </a>
+                <a href={`mailto:${attorney.email}`} className={attorneyLink}>
+                  {/* Wraps before the @ on narrow cards, never mid-name. */}
+                  {mailbox}
+                  <wbr />@{domain}
+                </a>
+              </div>
+            </li>
+          )
+        })}
       </ul>
     </section>
   )
@@ -238,10 +294,28 @@ function Contact() {
             The first consultation is free and confidential. We answer every
             message within one business day.
           </Lead>
-          <dl className="mt-4 flex flex-col gap-5 border-t-hairline border-stone-50/15 pt-6 text-body">
+          {/* Phone and email lead as the direct alternatives to the form;
+              office and hours step back to small text beneath them. */}
+          <dl className="mt-4 grid gap-x-8 gap-y-6 border-t-hairline border-stone-50/15 pt-6 sm:grid-cols-2">
+            <div>
+              <dt className="text-small text-stone-400">Phone</dt>
+              <dd className="text-body">
+                <a href={firm.phoneHref} className={contactLink}>
+                  {firm.phone}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="text-small text-stone-400">Email</dt>
+              <dd className="text-body">
+                <a href={`mailto:${firm.email}`} className={contactLink}>
+                  {firm.email}
+                </a>
+              </dd>
+            </div>
             <div>
               <dt className="text-small text-stone-400">Office</dt>
-              <dd>
+              <dd className="text-small text-stone-300">
                 {firm.address.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -250,32 +324,19 @@ function Contact() {
               </dd>
             </div>
             <div>
-              <dt className="text-small text-stone-400">Phone</dt>
-              <dd>
-                <a href={firm.phoneHref} className={contactLink}>
-                  {firm.phone}
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="text-small text-stone-400">Email</dt>
-              <dd>
-                <a href={`mailto:${firm.email}`} className={contactLink}>
-                  {firm.email}
-                </a>
-              </dd>
-            </div>
-            <div>
               <dt className="text-small text-stone-400">Hours</dt>
-              <dd>{firm.hours}</dd>
+              <dd className="text-small text-stone-300">
+                {firm.hours.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </dd>
             </div>
           </dl>
         </div>
-        {/* Bezel: 22px outer − 8px padding = 14px (rounded-xl) on the card. */}
-        <div className="self-start rounded-3xl bg-white/5 p-2 ring-1 ring-white/10 md:col-span-7">
-          <div className="rounded-xl bg-card p-6 text-card-foreground shadow-raised sm:p-8">
-            <ContactForm />
-          </div>
+        <div className="self-start rounded-xl bg-card p-6 text-card-foreground shadow-raised sm:p-8 md:col-span-7">
+          <ContactForm />
         </div>
       </div>
     </section>

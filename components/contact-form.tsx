@@ -15,12 +15,14 @@ function Field({
   id,
   label,
   hint,
+  description,
   error,
   children,
 }: {
   id: string
   label: string
   hint?: string
+  description?: string
   error?: string
   children: React.ReactNode
 }) {
@@ -33,6 +35,14 @@ function Field({
         )}
       </label>
       {children}
+      {description && (
+        <p
+          id={`${id}-description`}
+          className="text-small text-muted-foreground"
+        >
+          {description}
+        </p>
+      )}
       {error && (
         <p id={`${id}-error`} className="text-small text-destructive">
           {error}
@@ -124,23 +134,29 @@ function ContactForm() {
             </select>
           </Field>
         </div>
-        <Field id="message" label="How can we help?" error={errors?.message}>
+        <Field
+          id="message"
+          label="How can we help?"
+          description="A short summary is enough for now. Leave out anything confidential."
+          error={errors?.message}
+        >
           <textarea
             id="message"
             name="message"
-            rows={5}
+            rows={4}
             required
             defaultValue={values?.message}
             aria-invalid={!!errors?.message || undefined}
-            aria-describedby={errors?.message ? "message-error" : undefined}
+            aria-describedby={cn(
+              "message-description",
+              errors?.message && "message-error"
+            )}
             className={cn(fieldClass, "resize-y")}
           />
         </Field>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <Small className="max-w-sm">
-            A short summary is enough for now, so leave out anything
-            confidential. Contacting us does not create an attorney–client
-            relationship.
+          <Small className="text-balance">
+            Contacting us does not create an attorney–client relationship.
           </Small>
           <Button
             type="submit"

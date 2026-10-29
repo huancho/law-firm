@@ -8,8 +8,15 @@ export const firm = {
   phoneHref: "tel:+16175550142",
   email: "hello@calderwren.com",
   address: ["210 Federal Street, Suite 1400", "Boston, MA 02110"],
-  hours: "Monday to Friday, 8:30 am – 6:00 pm",
+  hours: ["Monday to Friday", "8:30 am – 6:00 pm"],
 }
+
+export const navigation = [
+  { href: "#about", label: "About" },
+  { href: "#practice-areas", label: "Practice areas" },
+  { href: "#attorneys", label: "Attorneys" },
+  { href: "#contact", label: "Contact" },
+]
 
 export const practiceAreas = [
   {
@@ -49,6 +56,8 @@ export const attorneys = [
     name: "Daniel Calder",
     role: "Founding Partner",
     focus: "Business & Corporate",
+    phone: "(617) 555-0151",
+    phoneHref: "tel:+16175550151",
     email: "dcalder@calderwren.com",
     image:
       "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200&q=80",
@@ -57,6 +66,8 @@ export const attorneys = [
     name: "Elena Wren",
     role: "Founding Partner",
     focus: "Family Law",
+    phone: "(617) 555-0152",
+    phoneHref: "tel:+16175550152",
     email: "ewren@calderwren.com",
     image:
       "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=1200&q=80",
@@ -65,6 +76,8 @@ export const attorneys = [
     name: "Marcus Hale",
     role: "Partner",
     focus: "Litigation & Disputes",
+    phone: "(617) 555-0153",
+    phoneHref: "tel:+16175550153",
     email: "mhale@calderwren.com",
     image:
       "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1200&q=80",
@@ -73,6 +86,8 @@ export const attorneys = [
     name: "Claire Okafor",
     role: "Associate",
     focus: "Estate Planning & Probate",
+    phone: "(617) 555-0154",
+    phoneHref: "tel:+16175550154",
     email: "cokafor@calderwren.com",
     image:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80",

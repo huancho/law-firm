@@ -236,10 +236,47 @@
   html {
     @apply font-sans [font-synthesis:none];
   }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
   /* Neutral ring in the link's own color, so it reads on light and navy sections alike. */
   a:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
+  }
+}
+
+/* Underline that draws in from the left on hover, keyboard focus and press,
+   so taps on touch screens get the same feedback. Sits on ::after because
+   links use ::before for their enlarged hit area. */
+@utility link-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: -0.3em;
+    height: 1px;
+    background-color: currentColor;
+    scale: 0 1;
+    transform-origin: left;
+    transition: scale 250ms var(--default-transition-timing-function);
+  }
+  @media (hover: hover) {
+    &:hover::after {
+      scale: 1 1;
+    }
+  }
+  &:focus-visible::after,
+  &:active::after {
+    scale: 1 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::after {
+      transition: none;
+    }
   }
 }
 
