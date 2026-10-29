@@ -1,14 +1,19 @@
-import { Geist, Geist_Mono } from "next/font/google"
+import { Newsreader, Public_Sans } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'})
-
-const fontMono = Geist_Mono({
+const fontSans = Public_Sans({
   subsets: ["latin"],
-  variable: "--font-mono",
+  style: ["normal", "italic"],
+  variable: "--font-sans",
+})
+
+const fontSerif = Newsreader({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  variable: "--font-serif",
 })
 
 export default function RootLayout({
@@ -20,7 +25,12 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", geist.variable)}
+      className={cn(
+        "antialiased",
+        "font-sans",
+        fontSans.variable,
+        fontSerif.variable
+      )}
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
