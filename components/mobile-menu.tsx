@@ -48,11 +48,11 @@ function MobileMenu() {
       <Drawer.Portal>
         <Drawer.Backdrop
           className={cn(
-            "fixed inset-0 min-h-dvh bg-navy-950/60 opacity-[calc(1-var(--drawer-swipe-progress))] backdrop-blur-[2px] transition-opacity duration-450 data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-starting-style:opacity-0 data-swiping:duration-0 supports-[-webkit-touch-callout:none]:absolute",
+            "fixed inset-0 z-20 min-h-dvh bg-navy-950/60 opacity-[calc(1-var(--drawer-swipe-progress))] backdrop-blur-[2px] transition-opacity duration-450 data-ending-style:opacity-0 data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-starting-style:opacity-0 data-swiping:duration-0 supports-[-webkit-touch-callout:none]:absolute",
             ease
           )}
         />
-        <Drawer.Viewport className="fixed inset-0 flex justify-end">
+        <Drawer.Viewport className="fixed inset-0 z-20 flex justify-end">
           <Drawer.Popup
             className={cn(
               "group flex h-full w-[calc(100vw-3rem)] max-w-sm translate-x-(--drawer-swipe-movement-x) flex-col overflow-y-auto overscroll-contain border-l-hairline border-stone-50/10 bg-navy-950 text-stone-50 shadow-2xl transition-transform duration-450 outline-none data-ending-style:translate-x-full data-ending-style:duration-[calc(var(--drawer-swipe-strength)*400ms)] data-starting-style:translate-x-full data-swiping:select-none",
