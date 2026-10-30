@@ -1,4 +1,3 @@
-import type { Metadata } from "next"
 import Image from "next/image"
 
 import { ContactForm } from "@/components/contact-form"
@@ -16,12 +15,6 @@ import { buttonVariants } from "@/components/ui/button"
 import { Eyebrow, H1, H2, Lead, P, Small } from "@/components/ui/typography"
 import { attorneys, firm, practiceAreas } from "@/lib/firm"
 import { cn } from "@/lib/utils"
-
-export const metadata: Metadata = {
-  title: `${firm.legalName} · Boston law firm`,
-  description:
-    "A Boston law firm handling business, litigation, family, real estate and estate planning matters since 1998.",
-}
 
 // rounded-[inherit] keeps the outline following the wrapper's corners instead
 // of being clipped off them.
