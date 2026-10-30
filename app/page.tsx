@@ -174,18 +174,11 @@ function PracticeAreas() {
         <div className="flex flex-col gap-6 md:sticky md:top-28 md:col-span-4 md:self-start">
           <div className="flex flex-col gap-4">
             <Eyebrow>Practice areas</Eyebrow>
-            <H2>Five kinds of law, and we turn down the rest</H2>
+            <H2>We specialize in five areas of law</H2>
           </div>
           <P className="text-muted-foreground">
-            Not sure where your matter fits?{" "}
-            <a
-              href="#contact"
-              className="relative text-foreground decoration-foreground/25 transition-colors before:absolute before:-inset-y-2.5 hover:decoration-foreground"
-            >
-              Tell us what’s going on
-            </a>
-            . If it isn’t something we handle, we’ll say so and point you to
-            someone who does.
+            Focusing on a few areas means the attorney on your case handles
+            matters like yours every week.
           </P>
         </div>
         {/* One area open at a time keeps the list about a screen tall. The
