@@ -132,4 +132,4 @@ function MobileMenu() {
   )
 }
 
-export { MobileMenu, iconButton }
+export { MobileMenu }
