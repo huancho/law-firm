@@ -16,6 +16,8 @@ import { Eyebrow, H1, H2, Lead, P, Small } from "@/components/ui/typography"
 import { attorneys, firm, practiceAreas } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
+import lawOffice from "@/assets/images/law-office.webp"
+
 // rounded-[inherit] keeps the outline following the wrapper's corners instead
 // of being clipped off them.
 const imageOutline =
@@ -120,11 +122,12 @@ function About() {
         {/* Landscape on phones so the photo doesn't push the copy below the fold. */}
         <div className="relative aspect-3/2 overflow-hidden rounded-lg md:col-span-5 md:aspect-4/5">
           <Image
-            src="https://images.unsplash.com/photo-1505547828843-176834e42154?w=1600&q=80"
-            alt="Stone columns beneath a coffered ceiling and skylight"
+            src={lawOffice}
+            alt="A wood-paneled office with arched windows, a wingback chair, bookshelves and a partner’s desk"
             fill
+            placeholder="blur"
             sizes="(min-width: 1152px) 440px, (min-width: 768px) 40vw, 100vw"
-            className={cn("object-cover", imageOutline)}
+            className={cn("object-cover object-right", imageOutline)}
           />
         </div>
         <div className="flex flex-col gap-8 md:col-span-7">
