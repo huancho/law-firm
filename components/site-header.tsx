@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 
 import { MobileMenu } from "@/components/mobile-menu"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { buttonVariants } from "@/components/ui/button"
 import { firm, navigation } from "@/lib/firm"
 import { cn } from "@/lib/utils"
@@ -89,6 +90,7 @@ function SiteHeader() {
         {/* Phones get the consultation button inside the menu instead; the
             logo, button and menu trigger don't fit one row at 375px. */}
         <div className="-mr-2 flex items-center gap-3 md:mr-0">
+          <ThemeToggle />
           <a
             href="#contact"
             className={cn(
