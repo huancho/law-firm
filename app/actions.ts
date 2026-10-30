@@ -29,7 +29,7 @@ export async function sendInquiry(
   }
 
   // Prototype: no email delivery yet. Wire this to the firm's intake inbox or CRM.
-  await new Promise((resolve) => setTimeout(resolve, 600))
+  await new Promise((resolve) => setTimeout(resolve, 1200))
 
   return { status: "success" }
 }
