@@ -63,23 +63,27 @@ function ContactForm() {
 
   // The confirmation shares a grid cell with the form, which stays in layout
   // (hidden) so the card keeps its height instead of collapsing on success.
+  // The form fades out quickly and the confirmation rises in as it clears.
   return (
     <div className="grid *:col-start-1 *:row-start-1">
-      <div role="status" className="flex flex-col justify-center gap-3">
+      <div role="status" className="flex flex-col justify-center">
         {sent && (
-          <>
+          <div className="flex animate-in flex-col gap-3 delay-100 duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] fill-mode-backwards fade-in slide-in-from-bottom-2 motion-reduce:animate-none">
             <H3>Thanks, we’ve got your message.</H3>
             <P className="text-muted-foreground">
               An attorney will read it and get back to you within one business
               day. If it can’t wait, call us at {firm.phone}.
             </P>
-          </>
+          </div>
         )}
       </div>
       <form
         action={formAction}
         noValidate
-        className={cn("flex flex-col gap-5", sent && "invisible")}
+        className={cn(
+          "flex flex-col gap-5 transition-[opacity,visibility] duration-150 ease-in motion-reduce:transition-none",
+          sent && "invisible opacity-0"
+        )}
       >
         <div className="grid gap-5 sm:grid-cols-2">
           <Field id="name" label="Full name" error={errors?.name}>
