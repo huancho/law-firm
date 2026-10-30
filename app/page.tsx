@@ -16,7 +16,7 @@ import { Eyebrow, H1, H2, Lead, P, Small } from "@/components/ui/typography"
 import { attorneys, firm, practiceAreas } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
-import lawOffice from "@/assets/images/law-office.webp"
+import office from "@/assets/images/office.webp"
 
 // rounded-[inherit] keeps the outline following the wrapper's corners instead
 // of being clipped off them.
@@ -120,14 +120,14 @@ function About() {
     <section id="about" className="mx-auto max-w-6xl py-24 px-gutter md:py-32">
       <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
         {/* Landscape on phones so the photo doesn't push the copy below the fold. */}
-        <div className="relative aspect-3/2 overflow-hidden rounded-lg md:col-span-5 md:aspect-4/5">
+        <div className="relative aspect-3/2 overflow-hidden rounded-lg md:col-span-5 md:aspect-square">
           <Image
-            src={lawOffice}
-            alt="A wood-paneled office with arched windows, a wingback chair, bookshelves and a partner’s desk"
+            src={office}
+            alt="A conference room with a long marble table, leather chairs and lit bookshelves, beside a glass-walled reception"
             fill
             placeholder="blur"
             sizes="(min-width: 1152px) 440px, (min-width: 768px) 40vw, 100vw"
-            className={cn("object-cover object-right", imageOutline)}
+            className={cn("object-cover", imageOutline)}
           />
         </div>
         <div className="flex flex-col gap-8 md:col-span-7">
