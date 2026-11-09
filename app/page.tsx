@@ -1,3 +1,4 @@
+import { CheckIcon } from "lucide-react"
 import Image from "next/image"
 
 import { ContactForm } from "@/components/contact-form"
@@ -48,39 +49,38 @@ export default function Page() {
 }
 
 function Hero() {
+  // Each one is a promise the site makes again further down, so the hero
+  // never claims more than the firm does.
+  const commitments = [
+    "Free, confidential first consultation",
+    "A reply within one business day",
+    "The founders read every new matter",
+    "One lead attorney from start to finish",
+  ]
+  const founders = attorneys.filter((a) => a.role === "Founding Partner")
+
   return (
     <section
       suppressHydrationWarning
-      className="hero-intro relative isolate flex min-h-[min(52rem,92svh)] items-end overflow-hidden bg-navy-950 text-stone-50"
+      className="hero-intro relative isolate overflow-hidden bg-navy-950 text-stone-50"
     >
       {/* Runs before the hero paints, so repeat views in a session skip the entrance. */}
       <script dangerouslySetInnerHTML={{ __html: introScript }} />
-      <Image
-        src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=2400&q=80"
-        alt=""
-        fill
-        sizes="100vw"
-        loading="eager"
-        fetchPriority="high"
-        className="hero-settle pointer-events-none -z-10 object-cover object-[70%_50%] select-none"
-      />
+      {/* A soft light behind the portraits, so they sit in a room rather than
+          on a flat navy sheet. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-linear-to-t from-navy-950 via-navy-950/80 to-navy-950/40 md:bg-linear-to-r md:from-navy-950/95 md:via-navy-950/75 md:to-navy-950/30"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_80%_45%,var(--color-navy-900),transparent)]"
       />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-scrim-b"
-      />
-      <div className="mx-auto w-full max-w-6xl pt-28 px-gutter pb-20 md:pt-36 md:pb-28">
-        <div className="flex max-w-2xl flex-col gap-6">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-x-8 gap-y-16 pt-32 px-gutter pb-20 md:min-h-[min(50rem,92svh)] md:grid-cols-12 md:pt-36 md:pb-24">
+        <div className="flex flex-col gap-6 md:col-span-7">
           <Eyebrow className="hero-rise text-brass-200 [--delay:150ms]">
             Practicing in Boston since {firm.founded}
           </Eyebrow>
           <H1 className="hero-rise [--delay:250ms]">
             Lawyers who tell you where you stand
           </H1>
-          <Lead className="hero-rise text-stone-200 [--delay:400ms]">
+          <Lead className="hero-rise max-w-[34rem] text-stone-300 [--delay:400ms]">
             We work for people, families and small companies. You’ll get a
             straight estimate of what your case will cost, and a lawyer who
             actually calls you back.
@@ -90,19 +90,62 @@ function Hero() {
               href="#contact"
               className={cn(
                 buttonVariants(),
-                "h-11 bg-stone-50 px-5 text-base text-navy-950 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
+                "h-12 bg-stone-50 px-6 text-base text-navy-950 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
               )}
             >
               Book a consultation
             </a>
             <a
               href={firm.phoneHref}
-              className="relative text-base text-stone-200 underline decoration-stone-50/30 underline-offset-[0.3em] transition-colors before:absolute before:-inset-y-2.5 hover:text-stone-50 hover:decoration-stone-50"
+              className="relative text-base text-stone-200 tabular-nums underline decoration-stone-50/30 underline-offset-[0.3em] transition-colors before:absolute before:-inset-y-2.5 hover:text-stone-50 hover:decoration-stone-50"
             >
               Or call {firm.phone}
             </a>
           </div>
+          <ul className="hero-rise mt-6 grid max-w-[36rem] gap-x-8 gap-y-3 border-t-hairline border-stone-50/15 pt-6 text-small text-stone-300 [--delay:700ms] sm:grid-cols-2">
+            {commitments.map((item) => (
+              <li key={item} className="flex gap-3">
+                <CheckIcon
+                  aria-hidden
+                  className="mt-[0.1875rem] size-4 shrink-0 text-brass-200"
+                  strokeWidth={2}
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
+        {/* The second portrait drops half a step, so the pair reads as two
+            people standing together rather than a grid of headshots. */}
+        <ul className="grid max-w-md grid-cols-2 gap-4 md:col-span-5 md:max-w-none md:gap-5">
+          {founders.map((founder, i) => (
+            <li
+              key={founder.name}
+              className={cn(
+                "hero-rise flex flex-col gap-3",
+                i === 0 ? "[--delay:450ms]" : "mt-10 [--delay:600ms] md:mt-16"
+              )}
+            >
+              <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-navy-900">
+                <Image
+                  src={founder.image}
+                  alt={`Portrait of ${founder.name}`}
+                  fill
+                  sizes="(min-width: 1152px) 220px, (min-width: 768px) 20vw, 50vw"
+                  loading="eager"
+                  fetchPriority="high"
+                  className="rounded-[inherit] object-cover object-[50%_20%] outline outline-1 -outline-offset-1 outline-white/10"
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-heading text-lg">{founder.name}</span>
+                <span className="text-small text-stone-400">
+                  Founding partner
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
@@ -140,8 +183,8 @@ function About() {
             <P className="text-muted-foreground">
               Daniel Calder and Elena Wren opened the firm in {firm.founded}{" "}
               after years of watching clients at big firms ask who was actually
-              working on their case. They still read every new matter that
-              comes in.
+              working on their case. They still read every new matter that comes
+              in.
             </P>
             <P className="text-muted-foreground">
               We take on fewer cases than we could. Each client gets one lead
