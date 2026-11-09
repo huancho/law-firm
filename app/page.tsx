@@ -1,5 +1,6 @@
 import Image from "next/image"
 
+import { AttorneyRoster } from "@/components/attorney-roster"
 import { ContactForm } from "@/components/contact-form"
 import { PracticeAreas } from "@/components/practice-areas"
 import { SiteFooter } from "@/components/site-footer"
@@ -18,9 +19,6 @@ const imageOutline =
   "rounded-[inherit] outline outline-1 -outline-offset-1 outline-black/10"
 
 const introScript = `try{var s=document.currentScript.parentElement;if(sessionStorage.getItem("intro-seen"))s.dataset.introSeen="";else sessionStorage.setItem("intro-seen","1")}catch(e){}`
-
-const attorneyLink =
-  "relative w-fit underline decoration-foreground/25 underline-offset-[0.25em] transition-colors before:absolute before:-inset-x-1 before:-inset-y-1.5 hover:decoration-foreground"
 
 const contactLink =
   "relative underline decoration-stone-50/30 underline-offset-[0.25em] transition-colors before:absolute before:-inset-y-2 hover:decoration-stone-50"
@@ -268,49 +266,7 @@ function Attorneys() {
           through your case.
         </Lead>
       </div>
-      <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-4">
-        {attorneys.map((attorney) => {
-          const [mailbox, domain] = attorney.email.split("@")
-
-          return (
-            <li key={attorney.name} className="flex flex-col gap-5">
-              <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-muted">
-                <Image
-                  src={attorney.image}
-                  alt={`Portrait of ${attorney.name}`}
-                  fill
-                  sizes="(min-width: 1152px) 258px, (min-width: 768px) 25vw, 50vw"
-                  className={cn("object-cover object-[50%_20%]", imageOutline)}
-                />
-              </div>
-              <div className="flex flex-col gap-1">
-                <h3 className="font-heading text-xl">{attorney.name}</h3>
-                {/* Role and focus on their own lines, so a narrow card never
-                    strands the separator at a line break. */}
-                <Small>
-                  {attorney.role}
-                  <span className="block">{attorney.focus}</span>
-                </Small>
-              </div>
-              {/* Hit areas stretch by half the gap, so the two links meet
-                  without overlapping. */}
-              <div className="flex flex-col gap-3 border-t-hairline border-foreground/15 pt-4 text-small">
-                <a
-                  href={attorney.phoneHref}
-                  className={cn(attorneyLink, "tabular-nums")}
-                >
-                  {attorney.phone}
-                </a>
-                <a href={`mailto:${attorney.email}`} className={attorneyLink}>
-                  {/* Wraps before the @ on narrow cards, never mid-name. */}
-                  {mailbox}
-                  <wbr />@{domain}
-                </a>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
+      <AttorneyRoster />
     </section>
   )
 }
