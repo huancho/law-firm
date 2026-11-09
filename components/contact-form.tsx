@@ -1,16 +1,30 @@
 "use client"
 
 import { LoaderCircleIcon } from "lucide-react"
-import { useActionState, useState } from "react"
+import { useActionState, useEffect, useState } from "react"
 
 import { sendInquiry, type ContactState } from "@/app/actions"
 import { Button } from "@/components/ui/button"
-import { H3, P, Small } from "@/components/ui/typography"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { H3, P } from "@/components/ui/typography"
 import { firm, practiceAreas } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
 const fieldClass =
   "w-full rounded-lg border border-input bg-background px-3 py-2.5 text-base text-foreground transition-[border-color,box-shadow] outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40 aria-invalid:border-destructive aria-invalid:ring-destructive/20"
+
+// null is "no area picked", so the form submits an empty value for it, as the
+// native select's empty option did.
+const areaItems = [
+  { label: "Not sure yet", value: null },
+  ...practiceAreas.map((area) => ({ label: area.name, value: area.name })),
+]
 
 function Field({
   id,
@@ -29,7 +43,19 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-small font-medium">
+      {/* A label only focuses inputs on click. The practice area is a button,
+          so focus it by hand, as clicking a native select's label would. */}
+      <label
+        htmlFor={id}
+        onClick={(e) => {
+          const control = document.getElementById(id)
+          if (control instanceof HTMLButtonElement) {
+            e.preventDefault()
+            control.focus()
+          }
+        }}
+        className="text-small font-medium"
+      >
         {label}
         {hint && (
           <span className="font-normal text-muted-foreground"> {hint}</span>
@@ -39,7 +65,7 @@ function Field({
       {description && (
         <p
           id={`${id}-description`}
-          className="text-small text-muted-foreground"
+          className="text-[0.8125rem] leading-normal text-muted-foreground"
         >
           {description}
         </p>
@@ -53,6 +79,14 @@ function Field({
   )
 }
 
+// The practice area cards preselect the area through this event, since the
+// select keeps its value in React state rather than in the DOM.
+const selectAreaEvent = "contact:select-area"
+
+function selectPracticeArea(area: string) {
+  window.dispatchEvent(new CustomEvent(selectAreaEvent, { detail: area }))
+}
+
 function ContactForm() {
   const [state, formAction, pending] = useActionState<ContactState, FormData>(
     sendInquiry,
@@ -62,6 +96,17 @@ function ContactForm() {
   // useActionState can't be reset, so "Send another message" remembers which
   // success it dismissed. The next submission returns a new state object.
   const [dismissed, setDismissed] = useState<ContactState>()
+  // Controlled, so a failed submission keeps the pick, and starting a new
+  // message clears it.
+  const [area, setArea] = useState<string | null>(null)
+
+  useEffect(() => {
+    function onSelectArea(e: Event) {
+      setArea((e as CustomEvent<string>).detail)
+    }
+    window.addEventListener(selectAreaEvent, onSelectArea)
+    return () => window.removeEventListener(selectAreaEvent, onSelectArea)
+  }, [])
 
   const { errors, values } = state
   const sent = state.status === "success" && state !== dismissed
@@ -113,7 +158,10 @@ function ContactForm() {
         </div>
         <Button
           variant="outline"
-          onClick={() => setDismissed(state)}
+          onClick={() => {
+            setDismissed(state)
+            setArea(null)
+          }}
           className="h-11 px-5 text-base"
         >
           Send another message
@@ -173,19 +221,33 @@ function ContactForm() {
               />
             </Field>
             <Field id="area" label="Practice area">
-              <select
-                id="area"
+              <Select
                 name="area"
-                defaultValue={values?.area ?? ""}
-                className={cn(fieldClass, "h-[2.875rem] py-0")}
+                items={areaItems}
+                value={area}
+                onValueChange={setArea}
               >
-                <option value="">Not sure yet</option>
-                {practiceAreas.map((area) => (
-                  <option key={area.name} value={area.name}>
-                    {area.name}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger
+                  id="area"
+                  className={cn(
+                    fieldClass,
+                    "w-full pr-3 text-left data-placeholder:text-foreground data-popup-open:border-ring data-[size=default]:h-[2.875rem]"
+                  )}
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="p-1">
+                  {areaItems.map((item) => (
+                    <SelectItem
+                      key={item.label}
+                      value={item.value}
+                      className="py-2 pl-2.5 text-base"
+                    >
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
           </div>
           <Field
@@ -209,10 +271,7 @@ function ContactForm() {
             />
           </Field>
         </div>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <Small className="text-balance">
-            Contacting us does not create an attorney–client relationship.
-          </Small>
+        <div className="flex flex-col sm:flex-row sm:justify-end">
           {/* Both labels share a grid cell so the button keeps its width. */}
           <Button
             type="submit"
@@ -243,4 +302,4 @@ function ContactForm() {
   )
 }
 
-export { ContactForm }
+export { ContactForm, selectPracticeArea }

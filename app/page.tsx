@@ -21,7 +21,10 @@ const imageOutline =
 const introScript = `try{var s=document.currentScript.parentElement;if(sessionStorage.getItem("intro-seen"))s.dataset.introSeen="";else sessionStorage.setItem("intro-seen","1")}catch(e){}`
 
 const contactLink =
-  "relative underline decoration-stone-50/30 underline-offset-[0.25em] transition-colors before:absolute before:-inset-y-2 hover:decoration-stone-50"
+  "relative underline decoration-foreground/25 underline-offset-[0.25em] transition-colors before:absolute before:-inset-y-2 hover:decoration-foreground"
+
+// The second sheet behind the contact form.
+const sheet = "absolute inset-0 rounded-lg bg-stone-50 shadow-raised"
 
 export default function Page() {
   return (
@@ -271,30 +274,33 @@ function Attorneys() {
   )
 }
 
+// The form sits on a sheet of the firm's stationery: a brass hairline frame
+// inset from the edge, the wordmark across the top, and a second sheet tucked
+// behind so it reads as a pad of letterhead rather than a widget.
 function Contact() {
   return (
-    <section id="contact" className="bg-navy-950 text-stone-50">
+    <section id="contact" className="bg-stone-100">
       <div className="mx-auto grid max-w-6xl gap-14 py-24 px-gutter md:grid-cols-12 md:py-32">
         <div className="flex flex-col gap-6 md:col-span-5">
-          <Eyebrow className="text-brass-200">Contact</Eyebrow>
+          <Eyebrow className="text-brass-700">Contact</Eyebrow>
           <H2>Tell us what’s going on</H2>
-          <Lead className="text-stone-300">
+          <Lead>
             The first consultation is free and confidential. We answer every
             message within one business day.
           </Lead>
           {/* Phone and email lead as the direct alternatives to the form;
               office and hours step back to small text beneath them. */}
-          <dl className="mt-4 grid gap-x-8 gap-y-6 border-t-hairline border-stone-50/15 pt-6 sm:grid-cols-2">
+          <dl className="mt-4 grid gap-x-8 gap-y-6 border-t-hairline border-foreground/15 pt-6 sm:grid-cols-2">
             <div>
-              <dt className="text-small text-stone-400">Phone</dt>
-              <dd className="text-body">
+              <dt className="text-small text-muted-foreground">Phone</dt>
+              <dd className="text-body tabular-nums">
                 <a href={firm.phoneHref} className={contactLink}>
                   {firm.phone}
                 </a>
               </dd>
             </div>
             <div>
-              <dt className="text-small text-stone-400">Email</dt>
+              <dt className="text-small text-muted-foreground">Email</dt>
               <dd className="text-body">
                 <a href={`mailto:${firm.email}`} className={contactLink}>
                   {firm.email}
@@ -302,8 +308,8 @@ function Contact() {
               </dd>
             </div>
             <div>
-              <dt className="text-small text-stone-400">Office</dt>
-              <dd className="text-small text-stone-300">
+              <dt className="text-small text-muted-foreground">Office</dt>
+              <dd className="text-small text-foreground/80">
                 {firm.address.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -312,8 +318,8 @@ function Contact() {
               </dd>
             </div>
             <div>
-              <dt className="text-small text-stone-400">Hours</dt>
-              <dd className="text-small text-stone-300">
+              <dt className="text-small text-muted-foreground">Hours</dt>
+              <dd className="text-small text-foreground/80">
                 {firm.hours.map((line) => (
                   <span key={line} className="block">
                     {line}
@@ -323,8 +329,25 @@ function Contact() {
             </div>
           </dl>
         </div>
-        <div className="self-start rounded-xl bg-card p-6 text-card-foreground shadow-raised sm:p-8 md:col-span-7">
-          <ContactForm />
+        <div className="relative isolate self-start md:col-span-7">
+          <div
+            aria-hidden
+            className={`${sheet} -z-10 translate-x-1.5 translate-y-2.5 rotate-[1.25deg]`}
+          />
+          <div className="rounded-lg bg-card p-1.5 text-card-foreground shadow-raised">
+            <div className="rounded-[4px] p-5 ring-1 ring-brass-300/45 ring-inset sm:p-7">
+              <header className="mb-7 flex items-center justify-between gap-4 border-b-hairline border-foreground/10 pb-5">
+                {/* The wordmark as it's set in the site header. */}
+                <span className="font-heading text-2xl tracking-tight">
+                  {firm.name}
+                </span>
+                <span className="hidden text-eyebrow text-brass-700 uppercase sm:block">
+                  Established {firm.founded}
+                </span>
+              </header>
+              <ContactForm />
+            </div>
+          </div>
         </div>
       </div>
     </section>
