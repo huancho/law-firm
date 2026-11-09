@@ -22,7 +22,7 @@ export const practiceAreas = [
   {
     name: "Business & Corporate",
     description:
-      "Setting up companies, drafting and reviewing contracts, buying and selling businesses. Most of our clients are founders and family-owned companies who would rather call us before they sign than after.",
+      "Company formation, contracts, and buying or selling a business. Our clients are mostly founders and family businesses who call us before they sign, not after.",
     matters: ["Entity formation", "M&A", "Commercial contracts"],
   },
   {

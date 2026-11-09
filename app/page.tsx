@@ -1,19 +1,12 @@
 import Image from "next/image"
 
 import { ContactForm } from "@/components/contact-form"
-import { PracticeAreaLink } from "@/components/practice-area-link"
+import { PracticeAreas } from "@/components/practice-areas"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { Eyebrow, H1, H2, Lead, P, Small } from "@/components/ui/typography"
-import { attorneys, firm, practiceAreas } from "@/lib/firm"
+import { attorneys, firm } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
 import building from "@/assets/images/building.webp"
@@ -254,74 +247,6 @@ function About() {
             ))}
           </dl>
         </div>
-      </div>
-    </section>
-  )
-}
-
-function PracticeAreas() {
-  return (
-    <section id="practice-areas" className="bg-stone-100">
-      <div className="mx-auto grid max-w-6xl gap-12 py-24 px-gutter md:grid-cols-12 md:gap-x-8 md:py-32">
-        <div className="flex flex-col gap-6 md:sticky md:top-28 md:col-span-4 md:self-start">
-          <div className="flex flex-col gap-4">
-            <Eyebrow>Practice areas</Eyebrow>
-            <H2>We specialize in five areas of law</H2>
-          </div>
-          <P className="text-muted-foreground">
-            Focusing on a few areas means the attorney on your case handles
-            matters like yours every week.
-          </P>
-        </div>
-        {/* One area open at a time keeps the list about a screen tall. The
-            first starts open so it's clear each row holds more. */}
-        <Accordion
-          defaultValue={[practiceAreas[0].name]}
-          hiddenUntilFound
-          className="border-t-hairline border-foreground/15 md:col-span-7 md:col-start-6"
-        >
-          {practiceAreas.map((area, i) => (
-            <AccordionItem
-              key={area.name}
-              value={area.name}
-              className="border-b-hairline border-foreground/15 not-last:border-b-hairline"
-            >
-              <AccordionTrigger className="items-baseline gap-4 rounded-none py-6 text-base font-normal hover:no-underline focus-visible:border-transparent focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground **:data-[slot=accordion-trigger-icon]:size-5 **:data-[slot=accordion-trigger-icon]:self-center **:data-[slot=accordion-trigger-icon]:transition-[rotate,color] hover:**:data-[slot=accordion-trigger-icon]:text-foreground md:py-7">
-                <span className="w-8 shrink-0 text-small text-muted-foreground tabular-nums">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-heading text-h3 text-balance transition-colors group-hover/accordion-trigger:text-brass-700">
-                  {area.name}
-                </span>
-              </AccordionTrigger>
-              {/* Indented by the number column plus gap, so the panel lines
-                  up under the area name. */}
-              <AccordionContent className="pb-8 pl-12 text-base md:pr-9 [&_p:not(:last-child)]:mb-0">
-                <div className="flex flex-col gap-5">
-                  <P className="text-muted-foreground">{area.description}</P>
-                  <ul className="flex flex-wrap gap-2">
-                    {area.matters.map((matter) => (
-                      <li key={matter}>
-                        <Badge
-                          variant="outline"
-                          className="h-6 border-foreground/15 px-2.5"
-                        >
-                          {matter}
-                        </Badge>
-                      </li>
-                    ))}
-                  </ul>
-                  <PracticeAreaLink
-                    area={area.name}
-                    className="relative w-fit text-small text-foreground decoration-foreground/25 underline-offset-[0.25em] transition-colors before:absolute before:-inset-y-2.5 hover:decoration-foreground"
-                  >
-                    Ask about {area.name.toLowerCase()}
-                  </PracticeAreaLink>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
       </div>
     </section>
   )
