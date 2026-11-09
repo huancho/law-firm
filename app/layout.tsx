@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next"
 import { Newsreader, Public_Sans } from "next/font/google"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { firm } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
@@ -37,8 +36,8 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 }
 
-// Navy in both schemes: the browser chrome sits on the hero and the scrolled
-// header, which are navy-950 whatever the theme.
+// Navy: the browser chrome sits on the hero and the scrolled header, which are
+// both navy-950.
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -56,7 +55,6 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      suppressHydrationWarning
       className={cn(
         "antialiased",
         "font-sans",
@@ -64,9 +62,7 @@ export default function RootLayout({
         fontSerif.variable
       )}
     >
-      <body>
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

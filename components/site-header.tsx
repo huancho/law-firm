@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 
 import { MobileMenu } from "@/components/mobile-menu"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { buttonVariants } from "@/components/ui/button"
-import { firm, navigation } from "@/lib/firm"
+import { Wordmark } from "@/components/wordmark"
+import { navigation } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
 // Matches md:h-20, so the header only hides once it has cleared its own height.
@@ -71,7 +71,7 @@ function SiteHeader() {
           href="#"
           className="relative font-heading text-2xl tracking-tight before:absolute before:-inset-x-2 before:-inset-y-1.5"
         >
-          {firm.name}
+          <Wordmark ampersandClassName="text-brass-200" />
         </a>
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-8 text-small">
@@ -90,12 +90,11 @@ function SiteHeader() {
         {/* Phones get the consultation button inside the menu instead; the
             logo, button and menu trigger don't fit one row at 375px. */}
         <div className="-mr-2 flex items-center gap-3 md:mr-0">
-          <ThemeToggle />
           <a
             href="#contact"
             className={cn(
               buttonVariants(),
-              "relative hidden h-10 bg-stone-50 px-4 text-navy-950 before:absolute before:-inset-1 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 sm:inline-flex dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
+              "relative hidden h-10 bg-stone-50 px-4 text-navy-950 before:absolute before:-inset-1 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 sm:inline-flex"
             )}
           >
             Book a consultation

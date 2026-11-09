@@ -110,7 +110,7 @@ function MobileMenu() {
                   onClick={navigate}
                   className={cn(
                     buttonVariants(),
-                    "h-12 w-full bg-stone-50 text-base text-navy-950 hover:bg-stone-200 active:bg-stone-200 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
+                    "h-12 w-full bg-stone-50 text-base text-navy-950 hover:bg-stone-200 active:bg-stone-200"
                   )}
                 >
                   Book a consultation

@@ -88,7 +88,7 @@ function ContactForm() {
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden
-          className="size-12 text-brass-700 dark:text-brass-200"
+          className="size-12 text-brass-700"
         >
           <circle
             cx="24"

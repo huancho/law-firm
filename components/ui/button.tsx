@@ -14,7 +14,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
-        // For surfaces that stay navy in both themes, like the site header.
+        // For navy surfaces, like the site header and hero.
         "ghost-inverse":
           "text-stone-50 hover:bg-stone-50/10 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 active:bg-stone-50/10 aria-expanded:bg-stone-50/10",
         destructive:

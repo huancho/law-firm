@@ -21,7 +21,7 @@ import office from "@/assets/images/office.webp"
 // rounded-[inherit] keeps the outline following the wrapper's corners instead
 // of being clipped off them.
 const imageOutline =
-  "rounded-[inherit] outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
+  "rounded-[inherit] outline outline-1 -outline-offset-1 outline-black/10"
 
 const introScript = `try{var s=document.currentScript.parentElement;if(sessionStorage.getItem("intro-seen"))s.dataset.introSeen="";else sessionStorage.setItem("intro-seen","1")}catch(e){}`
 
@@ -119,7 +119,7 @@ function Hero() {
                 href="#contact"
                 className={cn(
                   buttonVariants(),
-                  "h-12 bg-stone-50 px-6 text-base text-navy-950 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
+                  "h-12 bg-stone-50 px-6 text-base text-navy-950 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30"
                 )}
               >
                 Book a consultation
@@ -235,7 +235,7 @@ function About() {
 
 function PracticeAreas() {
   return (
-    <section id="practice-areas" className="bg-stone-100 dark:bg-navy-900/40">
+    <section id="practice-areas" className="bg-stone-100">
       <div className="mx-auto grid max-w-6xl gap-12 py-24 px-gutter md:grid-cols-12 md:gap-x-8 md:py-32">
         <div className="flex flex-col gap-6 md:sticky md:top-28 md:col-span-4 md:self-start">
           <div className="flex flex-col gap-4">
@@ -252,19 +252,19 @@ function PracticeAreas() {
         <Accordion
           defaultValue={[practiceAreas[0].name]}
           hiddenUntilFound
-          className="border-t-hairline border-foreground/15 md:col-span-7 md:col-start-6 dark:border-navy-800"
+          className="border-t-hairline border-foreground/15 md:col-span-7 md:col-start-6"
         >
           {practiceAreas.map((area, i) => (
             <AccordionItem
               key={area.name}
               value={area.name}
-              className="border-b-hairline border-foreground/15 not-last:border-b-hairline dark:border-navy-800"
+              className="border-b-hairline border-foreground/15 not-last:border-b-hairline"
             >
               <AccordionTrigger className="items-baseline gap-4 rounded-none py-6 text-base font-normal hover:no-underline focus-visible:border-transparent focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground **:data-[slot=accordion-trigger-icon]:size-5 **:data-[slot=accordion-trigger-icon]:self-center **:data-[slot=accordion-trigger-icon]:transition-[rotate,color] hover:**:data-[slot=accordion-trigger-icon]:text-foreground md:py-7">
                 <span className="w-8 shrink-0 text-small text-muted-foreground tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="font-heading text-h3 text-balance transition-colors group-hover/accordion-trigger:text-brass-700 dark:group-hover/accordion-trigger:text-brass-200">
+                <span className="font-heading text-h3 text-balance transition-colors group-hover/accordion-trigger:text-brass-700">
                   {area.name}
                 </span>
               </AccordionTrigger>
@@ -278,7 +278,7 @@ function PracticeAreas() {
                       <li key={matter}>
                         <Badge
                           variant="outline"
-                          className="h-6 border-foreground/15 px-2.5 dark:border-navy-800"
+                          className="h-6 border-foreground/15 px-2.5"
                         >
                           {matter}
                         </Badge>
