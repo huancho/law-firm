@@ -48,6 +48,15 @@ export default function Page() {
   )
 }
 
+// Light from a tall window off-frame top right: each shaft is a slanted quad,
+// in percent of the hero (left and right edge at the top, then at the bottom).
+// The gaps between them are the window's mullions.
+const lightShafts = [
+  { top: [69, 77], bottom: [44, 57] },
+  { top: [79, 87], bottom: [59, 72] },
+  { top: [89, 96], bottom: [74, 86] },
+]
+
 function Hero() {
   // Each one is a promise the site makes again further down, so the hero
   // never claims more than the firm does.
@@ -71,6 +80,32 @@ function Hero() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_80%_45%,var(--color-navy-900),transparent)]"
+      />
+      {/* Warm window light falling across the portraits. The blur sits on the
+          wrapper and the clip on each shaft, so the edges soften like real
+          light. On phones the shafts start halfway down, behind the
+          portraits, and fade in so they never cross the copy. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 blur-md max-md:top-1/2 max-md:mask-[linear-gradient(to_bottom,transparent,black_35%)]"
+      >
+        {lightShafts.map(({ top, bottom }, i) => (
+          <div
+            key={i}
+            className="hero-sweep absolute inset-0 bg-[linear-gradient(to_bottom,color-mix(in_oklch,var(--color-brass-200)_16%,transparent),color-mix(in_oklch,var(--color-brass-200)_7%,transparent)_55%,color-mix(in_oklch,var(--color-brass-200)_2%,transparent))]"
+            style={
+              {
+                "--delay": `${200 + i * 140}ms`,
+                clipPath: `polygon(${top[0]}% 0, ${top[1]}% 0, ${bottom[1]}% 100%, ${bottom[0]}% 100%)`,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </div>
+      {/* Where the light lands on the floor. */}
+      <div
+        aria-hidden
+        className="hero-sweep pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-[radial-gradient(ellipse_35%_60%_at_66%_100%,color-mix(in_oklch,var(--color-brass-400)_14%,transparent),transparent)] [--delay:600ms]"
       />
       <div className="mx-auto grid w-full max-w-6xl items-center gap-x-8 gap-y-16 pt-32 px-gutter pb-20 md:min-h-[min(50rem,92svh)] md:grid-cols-12 md:pt-36 md:pb-24">
         <div className="flex flex-col gap-6 md:col-span-7">
@@ -102,7 +137,7 @@ function Hero() {
               Or call {firm.phone}
             </a>
           </div>
-          <ul className="hero-rise mt-6 grid max-w-[36rem] gap-x-8 gap-y-3 border-t-hairline border-stone-50/15 pt-6 text-small text-stone-300 [--delay:700ms] sm:grid-cols-2">
+          <ul className="hero-rise mt-6 grid max-w-[36rem] gap-x-8 gap-y-3 border-t-hairline border-stone-50/15 pt-6 text-small text-stone-300 [--delay:700ms] sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
             {commitments.map((item) => (
               <li key={item} className="flex gap-3">
                 <CheckIcon
@@ -115,37 +150,39 @@ function Hero() {
             ))}
           </ul>
         </div>
-        {/* The second portrait drops half a step, so the pair reads as two
-            people standing together rather than a grid of headshots. */}
-        <ul className="grid max-w-md grid-cols-2 gap-4 md:col-span-5 md:max-w-none md:gap-5">
-          {founders.map((founder, i) => (
-            <li
-              key={founder.name}
-              className={cn(
-                "hero-rise flex flex-col gap-3",
-                i === 0 ? "[--delay:450ms]" : "mt-10 [--delay:600ms] md:mt-16"
-              )}
-            >
-              <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-navy-900">
-                <Image
-                  src={founder.image}
-                  alt={`Portrait of ${founder.name}`}
-                  fill
-                  sizes="(min-width: 1152px) 220px, (min-width: 768px) 20vw, 50vw"
-                  loading="eager"
-                  fetchPriority="high"
-                  className="rounded-[inherit] object-cover object-[50%_20%] outline outline-1 -outline-offset-1 outline-white/10"
-                />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-heading text-lg">{founder.name}</span>
-                <span className="text-small text-stone-400">
-                  Founding partner
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div className="relative max-w-md md:col-span-5 md:max-w-none">
+          {/* The second portrait drops half a step, so the pair reads as two
+              people standing together rather than a grid of headshots. */}
+          <ul className="grid grid-cols-2 gap-4 md:gap-5">
+            {founders.map((founder, i) => (
+              <li
+                key={founder.name}
+                className={cn(
+                  "hero-rise flex flex-col gap-3",
+                  i === 0 ? "[--delay:450ms]" : "mt-10 [--delay:600ms] md:mt-16"
+                )}
+              >
+                <div className="relative aspect-4/5 overflow-hidden rounded-lg bg-navy-900">
+                  <Image
+                    src={founder.image}
+                    alt={`Portrait of ${founder.name}`}
+                    fill
+                    sizes="(min-width: 1152px) 220px, (min-width: 768px) 20vw, 50vw"
+                    loading="eager"
+                    fetchPriority="high"
+                    className="rounded-[inherit] object-cover object-[50%_20%] outline outline-1 -outline-offset-1 outline-white/10"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-heading text-lg">{founder.name}</span>
+                  <span className="text-small text-stone-400">
+                    Founding partner
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   )
