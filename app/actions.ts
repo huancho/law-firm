@@ -21,7 +21,7 @@ export async function sendInquiry(
   const errors: ContactState["errors"] = {}
   if (!values.name) errors.name = "Enter your name."
   if (!/^\S+@\S+\.\S+$/.test(values.email))
-    errors.email = "Enter an email address like name@example.com."
+    errors.email = "Enter an email address."
   if (!values.message) errors.message = "Tell us briefly how we can help."
 
   if (Object.keys(errors).length > 0) {
