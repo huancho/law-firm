@@ -4,8 +4,7 @@ import { useEffect, useState } from "react"
 
 import { MobileMenu } from "@/components/mobile-menu"
 import { buttonVariants } from "@/components/ui/button"
-import { Wordmark } from "@/components/wordmark"
-import { navigation } from "@/lib/firm"
+import { firm, navigation } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
 // Matches md:h-20, so the header only hides once it has cleared its own height.
@@ -71,7 +70,7 @@ function SiteHeader() {
           href="#"
           className="relative font-heading text-2xl tracking-tight before:absolute before:-inset-x-2 before:-inset-y-1.5"
         >
-          <Wordmark ampersandClassName="text-brass-200" />
+          {firm.name}
         </a>
         <nav aria-label="Primary" className="hidden md:block">
           <ul className="flex items-center gap-8 text-small">

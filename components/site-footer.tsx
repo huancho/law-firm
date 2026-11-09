@@ -1,5 +1,4 @@
 import { Eyebrow, Small } from "@/components/ui/typography"
-import { Wordmark } from "@/components/wordmark"
 import { firm, navigation } from "@/lib/firm"
 
 const footerLink =
@@ -16,7 +15,7 @@ function SiteFooter() {
             href="#"
             className="relative self-start font-heading text-2xl tracking-tight before:absolute before:-inset-x-2 before:-inset-y-1.5"
           >
-            <Wordmark ampersandClassName="text-brass-600" />
+            {firm.name}
           </a>
           <Small className="max-w-sm text-pretty">
             The information on this website is for general purposes only and
