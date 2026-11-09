@@ -16,6 +16,7 @@ import { Eyebrow, H1, H2, Lead, P, Small } from "@/components/ui/typography"
 import { attorneys, firm, practiceAreas } from "@/lib/firm"
 import { cn } from "@/lib/utils"
 
+import building from "@/assets/images/building.webp"
 import office from "@/assets/images/office.webp"
 
 // rounded-[inherit] keeps the outline following the wrapper's corners instead
@@ -185,17 +186,42 @@ function About() {
   return (
     <section id="about" className="mx-auto max-w-6xl py-24 px-gutter md:py-32">
       <div className="grid items-center gap-12 md:grid-cols-12 md:gap-16">
-        {/* Landscape on phones so the photo doesn't push the copy below the fold. */}
-        <div className="relative aspect-3/2 overflow-hidden rounded-lg md:col-span-5 md:aspect-square">
-          <Image
-            src={office}
-            alt="A conference room with a long marble table, leather chairs and lit bookshelves, beside a glass-walled reception"
-            fill
-            placeholder="blur"
-            sizes="(min-width: 1152px) 440px, (min-width: 768px) 40vw, 100vw"
-            className={cn("object-cover", imageOutline)}
-          />
-        </div>
+        {/* The building, with the office inside it as an inset. Landscape on
+            phones so the photo doesn't push the copy below the fold. */}
+        <figure className="flex flex-col md:col-span-5">
+          <div className="relative">
+            <div className="relative aspect-3/2 overflow-hidden rounded-lg bg-muted md:aspect-4/5">
+              <Image
+                src={building}
+                alt="Looking up at glass office towers against a cloudy sky"
+                fill
+                placeholder="blur"
+                sizes="(min-width: 1152px) 440px, (min-width: 768px) 40vw, 100vw"
+                // The top third is sky; anchor low so the towers fill the frame.
+                className={cn(
+                  "object-cover object-[50%_80%] md:object-[50%_70%]",
+                  imageOutline
+                )}
+              />
+            </div>
+            {/* The inset overhangs the bottom edge, so the caption is held to
+                the width left of it. */}
+            <div className="absolute right-4 -bottom-10 aspect-square w-[38%] overflow-hidden rounded-md bg-muted ring-6 ring-background md:-right-6 md:-bottom-12 md:w-[46%]">
+              <Image
+                src={office}
+                alt="A corridor of glass-walled offices with black steel frames, past a lounge with a sofa and a floor lamp"
+                fill
+                placeholder="blur"
+                sizes="(min-width: 768px) 200px, 40vw"
+                className={cn("object-cover", imageOutline)}
+              />
+            </div>
+          </div>
+          <figcaption className="mt-4 max-w-[52%] text-small text-pretty text-muted-foreground md:max-w-[48%]">
+            Our office at 210 Federal Street, in the Financial District, since
+            2004.
+          </figcaption>
+        </figure>
         <div className="flex flex-col gap-8 md:col-span-7">
           <div className="flex flex-col gap-4">
             <Eyebrow>About the firm</Eyebrow>
