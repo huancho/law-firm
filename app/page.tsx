@@ -18,8 +18,6 @@ import office from "@/assets/images/office.webp"
 const imageOutline =
   "rounded-[inherit] outline outline-1 -outline-offset-1 outline-black/10"
 
-const introScript = `try{var s=document.currentScript.parentElement;if(sessionStorage.getItem("intro-seen"))s.dataset.introSeen="";else sessionStorage.setItem("intro-seen","1")}catch(e){}`
-
 const contactLink =
   "relative underline decoration-foreground/25 underline-offset-[0.25em] transition-colors before:absolute before:-inset-y-2 hover:decoration-foreground"
 
@@ -56,12 +54,9 @@ function Hero() {
 
   return (
     <section
-      suppressHydrationWarning
       data-header-tone="dark"
       className="hero-intro relative isolate overflow-hidden bg-navy-950 text-stone-50"
     >
-      {/* Runs before the hero paints, so repeat views in a session skip the entrance. */}
-      <script dangerouslySetInnerHTML={{ __html: introScript }} />
       {/* A soft light behind the portraits, so they sit in a room rather than
           on a flat navy sheet. */}
       <div
