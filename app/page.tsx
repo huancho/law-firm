@@ -1,4 +1,3 @@
-import { CheckIcon } from "lucide-react"
 import Image from "next/image"
 
 import { ContactForm } from "@/components/contact-form"
@@ -58,14 +57,6 @@ const lightShafts = [
 ]
 
 function Hero() {
-  // Each one is a promise the site makes again further down, so the hero
-  // never claims more than the firm does.
-  const commitments = [
-    "Free, confidential first consultation",
-    "A reply within one business day",
-    "The founders read every new matter",
-    "One lead attorney from start to finish",
-  ]
   const founders = attorneys.filter((a) => a.role === "Founding Partner")
 
   return (
@@ -120,35 +111,30 @@ function Hero() {
             straight estimate of what your case will cost, and a lawyer who
             actually calls you back.
           </Lead>
-          <div className="hero-rise mt-2 flex flex-wrap items-center gap-x-6 gap-y-4 [--delay:550ms]">
-            <a
-              href="#contact"
-              className={cn(
-                buttonVariants(),
-                "h-12 bg-stone-50 px-6 text-base text-navy-950 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
-              )}
-            >
-              Book a consultation
-            </a>
-            <a
-              href={firm.phoneHref}
-              className="relative text-base text-stone-200 tabular-nums underline decoration-stone-50/30 underline-offset-[0.3em] transition-colors before:absolute before:-inset-y-2.5 hover:text-stone-50 hover:decoration-stone-50"
-            >
-              Or call {firm.phone}
-            </a>
+          {/* The note sits right under the button, where the decision to
+              click is made. */}
+          <div className="mt-2 flex flex-col gap-4">
+            <div className="hero-rise flex flex-wrap items-center gap-x-6 gap-y-4 [--delay:550ms]">
+              <a
+                href="#contact"
+                className={cn(
+                  buttonVariants(),
+                  "h-12 bg-stone-50 px-6 text-base text-navy-950 hover:bg-stone-200 focus-visible:border-stone-50 focus-visible:ring-stone-50/30 dark:bg-stone-50 dark:text-navy-950 dark:hover:bg-stone-200"
+                )}
+              >
+                Book a consultation
+              </a>
+              <a
+                href={firm.phoneHref}
+                className="relative text-base text-stone-200 tabular-nums underline decoration-stone-50/30 underline-offset-[0.3em] transition-colors before:absolute before:-inset-y-2.5 hover:text-stone-50 hover:decoration-stone-50"
+              >
+                Or call {firm.phone}
+              </a>
+            </div>
+            <Small className="hero-rise text-stone-400 [--delay:650ms]">
+              Your first consultation is free and confidential.
+            </Small>
           </div>
-          <ul className="hero-rise mt-6 grid max-w-[36rem] gap-x-8 gap-y-3 border-t-hairline border-stone-50/15 pt-6 text-small text-stone-300 [--delay:700ms] sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
-            {commitments.map((item) => (
-              <li key={item} className="flex gap-3">
-                <CheckIcon
-                  aria-hidden
-                  className="mt-[0.1875rem] size-4 shrink-0 text-brass-200"
-                  strokeWidth={2}
-                />
-                {item}
-              </li>
-            ))}
-          </ul>
         </div>
         <div className="relative max-w-md md:col-span-5 md:max-w-none">
           {/* The second portrait drops half a step, so the pair reads as two
