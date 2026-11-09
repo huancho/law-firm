@@ -21,7 +21,10 @@ const label = "text-brass-200"
 function SiteFooter() {
   return (
     <footer className="bg-stone-100 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-      <div className="relative isolate overflow-hidden rounded-2xl bg-navy-800 text-stone-50 shadow-[inset_0_1px_0_color-mix(in_oklch,var(--color-stone-50)_12%,transparent),inset_0_0_0_1px_color-mix(in_oklch,var(--color-stone-50)_6%,transparent)]">
+      <div
+        data-header-tone="dark"
+        className="relative isolate overflow-hidden rounded-2xl bg-navy-800 text-stone-50 shadow-[inset_0_1px_0_color-mix(in_oklch,var(--color-stone-50)_12%,transparent),inset_0_0_0_1px_color-mix(in_oklch,var(--color-stone-50)_6%,transparent)]"
+      >
         {/* A darker pool behind the brand so the sheet has depth. */}
         <div
           aria-hidden

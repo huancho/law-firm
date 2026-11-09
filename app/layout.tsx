@@ -36,8 +36,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 }
 
-// Navy: the browser chrome sits on the hero and the scrolled header, which are
-// both navy-950.
+// Navy: the browser chrome opens on the navy-950 hero.
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,

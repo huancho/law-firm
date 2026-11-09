@@ -57,6 +57,7 @@ function Hero() {
   return (
     <section
       suppressHydrationWarning
+      data-header-tone="dark"
       className="hero-intro relative isolate overflow-hidden bg-navy-950 text-stone-50"
     >
       {/* Runs before the hero paints, so repeat views in a session skip the entrance. */}

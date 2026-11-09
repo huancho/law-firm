@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 const ease = "ease-[cubic-bezier(0.32,0.72,0,1)]"
 
 const iconButton =
-  "relative inline-flex size-10 items-center justify-center rounded-lg text-stone-50 transition-[background-color,scale] duration-150 before:absolute before:-inset-1 hover:bg-stone-50/10 active:scale-[0.94] active:bg-stone-50/10"
+  "relative inline-flex size-10 items-center justify-center rounded-lg transition-[color,background-color,scale] duration-150 before:absolute before:-inset-1 hover:bg-current/10 active:scale-[0.94] active:bg-current/10"
 
 // Links rise in one after another as the panel settles, and all leave at once.
 const stagger =
