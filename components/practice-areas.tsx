@@ -13,11 +13,11 @@ function PracticeAreas() {
     <section id="practice-areas" className="bg-stone-100">
       <div className="mx-auto flex max-w-6xl flex-col gap-12 py-24 px-gutter md:gap-14 md:py-32">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <div className="flex max-w-2xl flex-col gap-4">
+          <div data-reveal className="flex max-w-2xl flex-col gap-4">
             <Eyebrow>Practice areas</Eyebrow>
             <H2>We specialize in five areas of law</H2>
           </div>
-          <P className="max-w-sm text-muted-foreground">
+          <P data-reveal className="max-w-sm text-muted-foreground">
             Focusing on a few areas means the attorney on your case handles
             matters like yours every week.
           </P>
@@ -27,6 +27,7 @@ function PracticeAreas() {
           {practiceAreas.map((area, i) => (
             <li
               key={area.name}
+              data-reveal
               className="flex flex-col rounded-xl bg-card p-6 shadow-raised sm:p-7"
             >
               {/* Numbers stay neutral, so the brass disc on the link is the
@@ -60,7 +61,10 @@ function PracticeAreas() {
 
           {/* Kept shorter than the area cards (one-line heading, links on one
               row), so the area cards set the row height, not this one. */}
-          <li className="flex flex-col rounded-xl bg-navy-950 p-6 text-stone-50 sm:p-7">
+          <li
+            data-reveal
+            className="flex flex-col rounded-xl bg-navy-950 p-6 text-stone-50 sm:p-7"
+          >
             <span className="flex items-center gap-3 text-small font-medium text-stone-400">
               Not sure?
               <span aria-hidden className="h-px w-6 bg-stone-50/20" />

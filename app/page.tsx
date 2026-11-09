@@ -3,6 +3,7 @@ import Image from "next/image"
 import { AttorneyRoster } from "@/components/attorney-roster"
 import { ContactForm } from "@/components/contact-form"
 import { PracticeAreas } from "@/components/practice-areas"
+import { ScrollReveal } from "@/components/scroll-reveal"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { buttonVariants } from "@/components/ui/button"
@@ -36,6 +37,7 @@ export default function Page() {
         <Contact />
       </main>
       <SiteFooter />
+      <ScrollReveal />
     </>
   )
 }
@@ -180,7 +182,10 @@ function About() {
             phones so the photo doesn't push the copy below the fold. */}
         <figure className="flex flex-col md:col-span-5">
           <div className="relative">
-            <div className="relative aspect-3/2 overflow-hidden rounded-lg bg-muted md:aspect-4/5">
+            <div
+              data-reveal
+              className="relative aspect-3/2 overflow-hidden rounded-lg bg-muted md:aspect-4/5"
+            >
               <Image
                 src={building}
                 alt="Looking up at glass office towers against a cloudy sky"
@@ -196,7 +201,10 @@ function About() {
             </div>
             {/* The inset overhangs the bottom edge, so the caption is held to
                 the width left of it. */}
-            <div className="absolute right-4 -bottom-10 aspect-square w-[38%] overflow-hidden rounded-md bg-muted ring-6 ring-background md:-right-6 md:-bottom-12 md:w-[46%]">
+            <div
+              data-reveal
+              className="absolute right-4 -bottom-10 aspect-square w-[38%] overflow-hidden rounded-md bg-muted ring-6 ring-background md:-right-6 md:-bottom-12 md:w-[46%]"
+            >
               <Image
                 src={office}
                 alt="A corridor of glass-walled offices with black steel frames, past a lounge with a sofa and a floor lamp"
@@ -207,18 +215,21 @@ function About() {
               />
             </div>
           </div>
-          <figcaption className="mt-4 max-w-[52%] text-small text-pretty text-muted-foreground md:max-w-[48%]">
+          <figcaption
+            data-reveal
+            className="mt-4 max-w-[52%] text-small text-pretty text-muted-foreground md:max-w-[48%]"
+          >
             Our office at 210 Federal Street, in the Financial District, since
             2004.
           </figcaption>
         </figure>
         <div className="flex flex-col gap-8 md:col-span-7">
-          <div className="flex flex-col gap-4">
+          <div data-reveal className="flex flex-col gap-4">
             <Eyebrow>About the firm</Eyebrow>
             <H2>We’ve kept it small on purpose</H2>
           </div>
           {/* Paragraph spacing of one line-height keeps the vertical rhythm. */}
-          <div className="flex flex-col gap-[1lh] text-body">
+          <div data-reveal className="flex flex-col gap-[1lh] text-body">
             <P className="text-muted-foreground">
               Daniel Calder and Elena Wren opened the firm in {firm.founded}{" "}
               after years of watching clients at big firms ask who was actually
@@ -231,7 +242,10 @@ function About() {
               isn’t worth the money.
             </P>
           </div>
-          <dl className="grid max-w-prose grid-cols-3 gap-6 border-t-hairline border-foreground/15 pt-6">
+          <dl
+            data-reveal
+            className="grid max-w-prose grid-cols-3 gap-6 border-t-hairline border-foreground/15 pt-6"
+          >
             {facts.map((fact) => (
               <div key={fact.label} className="flex flex-col gap-1">
                 <dt className="text-small text-muted-foreground">
@@ -278,15 +292,20 @@ function Contact() {
     <section id="contact" className="bg-stone-100">
       <div className="mx-auto grid max-w-6xl gap-14 py-24 px-gutter md:grid-cols-12 md:py-32">
         <div className="flex flex-col gap-6 md:col-span-5">
-          <Eyebrow className="text-brass-700">Contact</Eyebrow>
-          <H2>Tell us what’s going on</H2>
-          <Lead>
+          <Eyebrow data-reveal className="text-brass-700">
+            Contact
+          </Eyebrow>
+          <H2 data-reveal>Tell us what’s going on</H2>
+          <Lead data-reveal>
             The first consultation is free and confidential. We answer every
             message within one business day.
           </Lead>
           {/* Phone and email lead as the direct alternatives to the form;
               office and hours step back to small text beneath them. */}
-          <dl className="mt-4 grid gap-x-8 gap-y-6 border-t-hairline border-foreground/15 pt-6 sm:grid-cols-2">
+          <dl
+            data-reveal
+            className="mt-4 grid gap-x-8 gap-y-6 border-t-hairline border-foreground/15 pt-6 sm:grid-cols-2"
+          >
             <div>
               <dt className="text-small text-muted-foreground">Phone</dt>
               <dd className="text-body tabular-nums">
@@ -325,10 +344,10 @@ function Contact() {
             </div>
           </dl>
         </div>
-        <div className="relative isolate self-start md:col-span-7">
+        <div data-reveal className="relative isolate self-start md:col-span-7">
           <div
             aria-hidden
-            className={`${sheet} -z-10 translate-x-1.5 translate-y-2.5 rotate-[1.25deg]`}
+            className={`${sheet} sheet-settle -z-10 translate-x-1.5 translate-y-2.5 rotate-[1.25deg]`}
           />
           <div className="rounded-lg bg-card p-1.5 text-card-foreground shadow-raised">
             <div className="rounded-[4px] p-5 ring-1 ring-brass-300/45 ring-inset sm:p-7">

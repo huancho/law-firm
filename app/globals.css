@@ -276,6 +276,39 @@
   }
 }
 
+/* Section entrances below the hero: the same short rise as the hero, played
+   once as each piece scrolls into view (components/scroll-reveal.tsx). Only
+   hidden when scripts run, so the page reads fine without JavaScript. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    translate: 0 0.75rem;
+  }
+}
+
+/* The sheet behind the contact form starts squared under it, then slips out
+   to its resting angle once the form has landed. */
+@keyframes sheet-settle {
+  from {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (scripting: enabled) {
+  [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+  }
+  [data-reveal][data-revealed=""] {
+    animation: reveal 800ms cubic-bezier(0.23, 1, 0.32, 1)
+      calc(min(var(--reveal-index, 0), 8) * 80ms) both;
+  }
+  [data-reveal][data-revealed=""] .sheet-settle {
+    animation: sheet-settle 900ms cubic-bezier(0.23, 1, 0.32, 1)
+      calc(min(var(--reveal-index, 0), 8) * 80ms + 350ms) both;
+  }
+}
+
 /* Contact confirmation: the ring, then the tick, draw themselves in. Paths
    set pathLength="1" so one dash covers any shape. */
 @keyframes draw-in {
